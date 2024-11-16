@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -29,15 +30,10 @@ public class SecurityConfiguration {
                 .authorizeExchange(authorize ->
                         authorize
                                 .pathMatchers("user-service/api/v1/**").permitAll()
-                                .pathMatchers("products-service/api/v1/**").permitAll()
-                                .pathMatchers("order-payment-service/api/v1/**").permitAll()
-                                .pathMatchers("/eureka/**")
-                                .permitAll()
                                 .anyExchange()
                                 .authenticated())
                 /*  .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec.jwt(Customizer.withDefaults()));*/
                 .oauth2ResourceServer(ServerHttpSecurity.OAuth2ResourceServerSpec::jwt);
-
 
         return  serverHttpSecurity.build();
     }
@@ -45,14 +41,14 @@ public class SecurityConfiguration {
     @Bean
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(List.of("*")); // Specify your allowed origin
+        corsConfig.setAllowedOrigins(List.of("*"));
         corsConfig.setAllowedMethods(List.of("*"));
         corsConfig.setMaxAge(3600L);
         corsConfig.addAllowedHeader("*");
         corsConfig.setAllowCredentials(false); // Allow credentials
 
-        UrlBasedCorsConfigurationSource source =
-                new UrlBasedCorsConfigurationSource();
+        org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource source =
+                new org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfig);
 
         return new CorsWebFilter(source);
