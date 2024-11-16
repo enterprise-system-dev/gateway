@@ -30,6 +30,8 @@ public class SecurityConfiguration {
                 .authorizeExchange(authorize ->
                         authorize
                                 .pathMatchers("user-service/api/v1/**").permitAll()
+                                .pathMatchers("product-service/api/v1/**").permitAll()
+                                .pathMatchers("order-payment/api/v1/**").permitAll()
                                 .anyExchange()
                                 .authenticated())
                 /*  .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec.jwt(Customizer.withDefaults()));*/
