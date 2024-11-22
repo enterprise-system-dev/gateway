@@ -29,6 +29,7 @@ public class SecurityConfiguration {
                         authorize
                                 .pathMatchers("user-service/api/v1/**").permitAll()
                                 .pathMatchers("product-service/api/v1/**").permitAll()
+                                .pathMatchers("order-payment-service/api/v1/**").permitAll()
                                 .pathMatchers("/eureka/**")
                                 .permitAll()
                                 .anyExchange()
