@@ -11,7 +11,7 @@ public class GatewayConfig {
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("user-service-api", r -> r.path("/user-service/**")
-                        .uri("http://localhost:8083"))
+                        .uri("http://88.222.245.165:8083"))
                 .route("product-api", r -> r.path("/product-service/**")
                         .uri("http://88.222.245.165:8081"))
                 .route("order-payment-service", r -> r.path("/order-payment-service/**")
